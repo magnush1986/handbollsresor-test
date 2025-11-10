@@ -53,9 +53,9 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
       {renderLine('📍', 'Plats', event['Plats'])}
       {renderLine('🗓️', 'Period', `${event['Datum från']} – ${event['Datum till']}`)}
       {event['Övrig information']?.trim() && (
-        <div className="flex gap-2 items-start">
-          <span className="text-lg flex-shrink-0">🗒️</span>
-          <span className="text-gray-900">{event['Övrig information']}</span>
+        <div className="flex gap-2 items-start text-sm">
+          <span className="text-base flex-shrink-0">🗒️</span>
+          <span className="text-gray-900 break-words min-w-0">{event['Övrig information']}</span>
         </div>
       )}
     </>
@@ -66,9 +66,9 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
       {event['Ledig från skolan?']?.trim().toLowerCase() === 'ja' && renderLine('✅', 'Ledig från skolan', 'Ja')}
       {event['Ledig från skolan?']?.trim().toLowerCase() === 'nej' && renderLine('❌', 'Ledig från skolan', 'Nej')}
       {event['Ledighet']?.trim() && (
-        <div className="flex gap-2 items-start">
-          <span className="text-lg flex-shrink-0">📝</span>
-          <span className="text-gray-900">{event['Ledighet']}</span>
+        <div className="flex gap-2 items-start text-sm">
+          <span className="text-base flex-shrink-0">📝</span>
+          <span className="text-gray-900 break-words min-w-0">{event['Ledighet']}</span>
         </div>
       )}
     </>
@@ -91,9 +91,9 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
       {event['Samling Härnösand']?.trim() && renderLine('🚍', 'Samling Härnösand', event['Samling Härnösand'])}
       {event['Samling på plats']?.trim() && renderLine('⏱️', 'Samling på plats', event['Samling på plats'])}
       {event['Resväg']?.trim() && (
-        <div className="flex gap-2 items-start">
-          <span className="text-lg flex-shrink-0">🗺️</span>
-          <span className="text-gray-900">{event['Resväg']}</span>
+        <div className="flex gap-2 items-start text-sm">
+          <span className="text-base flex-shrink-0">🗺️</span>
+          <span className="text-gray-900 break-words min-w-0">{event['Resväg']}</span>
         </div>
       )}
       {renderLine('🚗', 'Färdsätt', event['Färdsätt'])}
@@ -108,18 +108,18 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
       {renderLine('🪧', 'Namn på boende', event['Namn på boende'])}
       {renderLine('🔑', 'Tillgång till boende', event['Tillgång till boende'])}
       {event['Adress till boende']?.trim() && (
-        <div className="space-y-2">
+        <div className="space-y-2 text-sm">
           <div className="flex gap-2 items-start">
-            <span className="text-lg flex-shrink-0">📬</span>
-            <span className="font-semibold text-gray-700">Adress till boende:</span>
-            <span className="text-gray-900">{event['Adress till boende']}</span>
+            <span className="text-base flex-shrink-0">📬</span>
+            <span className="font-semibold text-gray-700 flex-shrink-0">Adress till boende:</span>
+            <span className="text-gray-900 break-words min-w-0">{event['Adress till boende']}</span>
           </div>
           <div className="ml-7 space-y-1">
             <a
               href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event['Adress till boende'])}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary hover:text-primary-dark hover:underline transition-colors text-sm inline-block"
+              className="text-primary hover:text-primary-dark hover:underline transition-colors text-xs inline-block"
             >
               Visa på Google Maps
             </a>
@@ -128,7 +128,7 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
               href={`https://maps.apple.com/?q=${encodeURIComponent(event['Adress till boende'])}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary hover:text-primary-dark hover:underline transition-colors text-sm inline-block"
+              className="text-primary hover:text-primary-dark hover:underline transition-colors text-xs inline-block"
             >
               Visa på Apple Kartor
             </a>
