@@ -57,6 +57,7 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
     <>
       {renderLine('🏷️', 'Typ', event['Typ av händelse'])}
       {renderLine('📍', 'Plats', event['Plats'])}
+      {renderLine('📍', 'Plats (laget.se)', event['Location (ICS)'])}
       {dateStr && renderLine('🗓️', 'Period', dateStr)}
       {event['Övrig information']?.trim() && (
         <div className="flex gap-2 items-start text-sm md:text-base">
