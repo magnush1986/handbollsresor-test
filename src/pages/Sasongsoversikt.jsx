@@ -234,8 +234,7 @@ export default function Sasongsoversikt() {
         ) : (
           <>
             {/* Desktop Gantt View */}
-            <div className="hidden lg:block overflow-x-auto">
-              <div className="min-w-[800px]">
+            <div className="hidden lg:block">
               <div className="bg-gray-100 border-b border-gray-300 px-4 py-2 flex text-xs font-semibold text-gray-700">
                 <div className="w-48 flex-shrink-0">Händelse</div>
                 <div className="flex-1 flex">
@@ -278,7 +277,6 @@ export default function Sasongsoversikt() {
                   </div>
                 ))}
               </div>
-            </div>
             </div>
 
             {/* Mobile Timeline View - Grouped by Month */}
