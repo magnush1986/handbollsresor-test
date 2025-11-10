@@ -64,7 +64,11 @@ export function formatDateRange(startDate, endDate) {
     return `${start.getDate()}–${end.getDate()} ${getMonthName(start.getMonth())} ${start.getFullYear()}`;
   }
 
-  return `${formatDate(start)} – ${formatDate(end)}`;
+  if (start.getFullYear() === end.getFullYear()) {
+    return `${start.getDate()} ${getMonthName(start.getMonth())}–${end.getDate()} ${getMonthName(end.getMonth())} ${end.getFullYear()}`;
+  }
+
+  return `${start.getDate()} ${getMonthName(start.getMonth())}–${end.getDate()} ${getMonthName(end.getMonth())} ${end.getFullYear()}`;
 }
 
 export function formatDate(date) {
