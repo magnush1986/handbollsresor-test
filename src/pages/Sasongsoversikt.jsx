@@ -73,6 +73,25 @@ export default function Sasongsoversikt() {
     setSelectedPlaces(newPlaces);
   };
 
+  const eventTypeColors = useMemo(() => {
+    const types = [...new Set(tasks.map(t => t.type))];
+    const colors = [
+      { bg: 'bg-emerald-500', hover: 'group-hover:bg-emerald-600' },
+      { bg: 'bg-blue-500', hover: 'group-hover:bg-blue-600' },
+      { bg: 'bg-purple-500', hover: 'group-hover:bg-purple-600' },
+      { bg: 'bg-amber-500', hover: 'group-hover:bg-amber-600' },
+      { bg: 'bg-rose-500', hover: 'group-hover:bg-rose-600' },
+      { bg: 'bg-cyan-500', hover: 'group-hover:bg-cyan-600' },
+      { bg: 'bg-pink-500', hover: 'group-hover:bg-pink-600' },
+      { bg: 'bg-teal-500', hover: 'group-hover:bg-teal-600' },
+    ];
+    const mapping = {};
+    types.forEach((type, idx) => {
+      mapping[type] = colors[idx % colors.length];
+    });
+    return mapping;
+  }, [tasks]);
+
   const ganttData = useMemo(() => {
     if (tasks.length === 0) return { months: [], tasks: [] };
 
@@ -109,14 +128,15 @@ export default function Sasongsoversikt() {
           startOffset,
           duration,
           widthPercent: (duration / totalDays) * 100,
-          leftPercent: (startOffset / totalDays) * 100
+          leftPercent: (startOffset / totalDays) * 100,
+          color: eventTypeColors[task.type]
         };
       }),
       totalDays,
       minDate,
       maxDate
     };
-  }, [tasks]);
+  }, [tasks, eventTypeColors]);
 
   if (loading) {
     return (
@@ -212,8 +232,10 @@ export default function Sasongsoversikt() {
         {tasks.length === 0 ? (
           <p className="text-gray-600 text-center py-8">Inga händelser matchar filtreringen</p>
         ) : (
-          <div className="overflow-x-auto">
-            <div className="min-w-[800px]">
+          <>
+            {/* Desktop Gantt View */}
+            <div className="hidden lg:block overflow-x-auto">
+              <div className="min-w-[800px]">
               <div className="bg-gray-100 border-b border-gray-300 px-4 py-2 flex text-xs font-semibold text-gray-700">
                 <div className="w-48 flex-shrink-0">Händelse</div>
                 <div className="flex-1 flex">
@@ -242,7 +264,7 @@ export default function Sasongsoversikt() {
                     </div>
                     <div className="flex-1 relative h-8">
                       <div
-                        className="absolute h-6 bg-primary rounded flex items-center px-2 text-white text-xs font-medium shadow-sm group-hover:shadow-md transition-shadow"
+                        className={`absolute h-6 ${task.color.bg} ${task.color.hover} rounded flex items-center px-2 text-white text-xs font-medium shadow-md transition-all`}
                         style={{
                           left: `${task.leftPercent}%`,
                           width: `${task.widthPercent}%`,
@@ -257,7 +279,37 @@ export default function Sasongsoversikt() {
                 ))}
               </div>
             </div>
-          </div>
+            </div>
+
+            {/* Mobile Timeline View */}
+            <div className="lg:hidden space-y-4">
+              {ganttData.tasks.map((task, idx) => (
+                <div key={idx} className="bg-gray-50 rounded-lg p-4 border border-gray-200 hover:border-primary/30 transition-colors">
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-gray-900 text-base leading-tight mb-1">
+                        {task.name}
+                      </h3>
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <span>📍</span>
+                        <span className="truncate">{task.place}</span>
+                      </div>
+                    </div>
+                    <div className={`${task.color.bg} text-white px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap flex-shrink-0`}>
+                      {task.type}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-gray-700 bg-white rounded px-3 py-2 border border-gray-200">
+                    <span>📅</span>
+                    <span className="font-medium">{task.start}</span>
+                    <span className="text-gray-400">→</span>
+                    <span className="font-medium">{task.end}</span>
+                    <span className="ml-auto text-xs text-gray-500">({task.duration} dag{task.duration !== 1 ? 'ar' : ''})</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         )}
       </div>
     </div>
