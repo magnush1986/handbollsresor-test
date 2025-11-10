@@ -84,7 +84,14 @@ export default function Budget() {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Budget</h1>
 
-      <div className="mb-8 flex flex-wrap gap-4">
+      <div className="mb-8 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+        <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+          <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+          </svg>
+          Filtrera budget
+        </h2>
+        <div className="flex flex-wrap gap-4">
         <div className="flex flex-col sm:flex-row sm:items-center gap-2">
           <label htmlFor="season-filter" className="font-semibold text-gray-700">
             Säsong:
@@ -96,7 +103,7 @@ export default function Budget() {
               setSelectedSeason(e.target.value);
               setSelectedType('');
             }}
-            className="px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all min-w-[200px]"
+            className="px-4 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all min-w-[200px]"
           >
             {seasons.map(season => (
               <option key={season} value={season}>{season}</option>
@@ -112,7 +119,7 @@ export default function Budget() {
             id="type-filter"
             value={selectedType}
             onChange={(e) => setSelectedType(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all min-w-[200px]"
+            className="px-4 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all min-w-[200px]"
           >
             <option value="">Alla typer</option>
             {availableTypes.map(type => (
@@ -120,13 +127,14 @@ export default function Budget() {
             ))}
           </select>
         </div>
+        </div>
       </div>
 
       <div className="space-y-4">
         {Object.keys(groupedData).sort().map(key => {
           const g = groupedData[key];
           return (
-            <details key={key} className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
+            <details key={key} className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-200">
               <summary className="px-6 py-4 cursor-pointer hover:bg-gray-50 transition-colors select-none">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -190,10 +198,10 @@ export default function Budget() {
       </div>
 
       {selectedSeason && (
-        <div className="mt-8 bg-primary text-white rounded-lg shadow-lg px-8 py-6">
+        <div className="mt-8 bg-gradient-to-r from-primary to-primary-dark text-white rounded-xl shadow-xl px-8 py-8 border-2 border-primary-light">
           <div className="text-center">
-            <div className="text-lg font-medium mb-2">Total kostnad för säsongen</div>
-            <div className="text-4xl font-bold">{total.toLocaleString('sv-SE')} kr</div>
+            <div className="text-lg font-medium mb-2 opacity-90">Total kostnad för säsongen</div>
+            <div className="text-5xl font-bold tracking-tight">{total.toLocaleString('sv-SE')} kr</div>
           </div>
         </div>
       )}

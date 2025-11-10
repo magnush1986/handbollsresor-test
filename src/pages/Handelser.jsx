@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useGoogleSheet } from '../hooks/useGoogleSheet';
-import { getCurrentSeason, getEffectiveToday } from '../utils/dateUtils';
+import { getCurrentSeason, getEffectiveToday, getWeekNumber, isSameWeek, isSameDay, getWeekDateRange } from '../utils/dateUtils';
 import EventCard from '../components/EventCard';
 import EventFilters from '../components/EventFilters';
 
@@ -57,23 +57,61 @@ export default function Handelser() {
   }, [filteredEvents, selectedSeason, currentSeason, todayDate]);
 
   const groupedEvents = (events) => {
-    const grouped = {};
+    const byMonth = {};
     events.forEach(e => {
       const key = `${e['År']}-${e['Månadsnummer'].padStart(2, '0')}`;
-      if (!grouped[key]) {
-        grouped[key] = {
+      if (!byMonth[key]) {
+        byMonth[key] = {
           year: e['År'],
           name: e['Månadsnamn'],
-          data: []
+          events: []
         };
       }
-      grouped[key].data.push(e);
+      byMonth[key].events.push(e);
     });
 
-    return Object.keys(grouped).sort().map(key => ({
-      ...grouped[key],
-      data: grouped[key].data.sort((a, b) => new Date(a['Datum från']) - new Date(b['Datum från']))
-    }));
+    return Object.keys(byMonth).sort().map(key => {
+      const monthData = byMonth[key];
+      const sortedEvents = monthData.events.sort((a, b) => new Date(a['Datum från']) - new Date(b['Datum från']));
+
+      const groupedByWeek = [];
+      let currentGroup = null;
+
+      sortedEvents.forEach((event, idx) => {
+        const eventStart = event['Datum från'];
+        const prevEvent = sortedEvents[idx - 1];
+
+        if (!currentGroup) {
+          currentGroup = {
+            type: 'single',
+            weekNumber: getWeekNumber(eventStart),
+            weekRange: getWeekDateRange(eventStart),
+            events: [event]
+          };
+        } else if (isSameWeek(currentGroup.events[0]['Datum från'], eventStart)) {
+          currentGroup.events.push(event);
+          currentGroup.type = currentGroup.events.length > 1 ? 'week' : 'single';
+        } else {
+          groupedByWeek.push(currentGroup);
+          currentGroup = {
+            type: 'single',
+            weekNumber: getWeekNumber(eventStart),
+            weekRange: getWeekDateRange(eventStart),
+            events: [event]
+          };
+        }
+      });
+
+      if (currentGroup) {
+        groupedByWeek.push(currentGroup);
+      }
+
+      return {
+        year: monthData.year,
+        name: monthData.name,
+        groups: groupedByWeek
+      };
+    });
   };
 
   if (loading) {
@@ -118,14 +156,32 @@ export default function Handelser() {
                 <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
                   🗓️ {season}
                 </h2>
-                {groupedEvents(events).map((group, idx) => (
-                  <div key={idx} className="mb-8">
-                    <h3 className="text-xl font-semibold text-gray-700 mb-4">
-                      🗓️ {group.year} – {group.name}
+                {groupedEvents(events).map((month, monthIdx) => (
+                  <div key={monthIdx} className="mb-10">
+                    <h3 className="text-2xl font-bold text-gray-800 mb-6 pb-2 border-b-2 border-primary/20">
+                      📅 {month.year} – {month.name}
                     </h3>
-                    <div className="space-y-4">
-                      {group.data.map((event, i) => (
-                        <EventCard key={i} event={event} defaultOpen={idx === 0 && i === 0} />
+                    <div className="space-y-6">
+                      {month.groups.map((group, groupIdx) => (
+                        <div key={groupIdx}>
+                          {group.type === 'week' && (
+                            <h4 className="text-lg font-semibold text-primary mb-3 flex items-center gap-2">
+                              <span className="text-sm bg-primary/10 px-3 py-1 rounded-full">
+                                {group.weekRange.formatted}
+                              </span>
+                            </h4>
+                          )}
+                          <div className="space-y-3">
+                            {group.events.map((event, eventIdx) => (
+                              <EventCard
+                                key={eventIdx}
+                                event={event}
+                                defaultOpen={monthIdx === 0 && groupIdx === 0 && eventIdx === 0}
+                                showInlineDate={group.type === 'week'}
+                              />
+                            ))}
+                          </div>
+                        </div>
                       ))}
                     </div>
                   </div>
@@ -134,14 +190,32 @@ export default function Handelser() {
             ))
         ) : (
           <>
-            {groupedEvents(upcomingEvents).map((group, idx) => (
-              <div key={idx} className="mb-8">
-                <h3 className="text-xl font-semibold text-gray-700 mb-4">
-                  🗓️ {group.year} – {group.name}
+            {groupedEvents(upcomingEvents).map((month, monthIdx) => (
+              <div key={monthIdx} className="mb-10">
+                <h3 className="text-2xl font-bold text-gray-800 mb-6 pb-2 border-b-2 border-primary/20">
+                  📅 {month.year} – {month.name}
                 </h3>
-                <div className="space-y-4">
-                  {group.data.map((event, i) => (
-                    <EventCard key={i} event={event} defaultOpen={idx === 0 && i === 0} />
+                <div className="space-y-6">
+                  {month.groups.map((group, groupIdx) => (
+                    <div key={groupIdx}>
+                      {group.type === 'week' && (
+                        <h4 className="text-lg font-semibold text-primary mb-3 flex items-center gap-2">
+                          <span className="text-sm bg-primary/10 px-3 py-1 rounded-full">
+                            {group.weekRange.formatted}
+                          </span>
+                        </h4>
+                      )}
+                      <div className="space-y-3">
+                        {group.events.map((event, eventIdx) => (
+                          <EventCard
+                            key={eventIdx}
+                            event={event}
+                            defaultOpen={monthIdx === 0 && groupIdx === 0 && eventIdx === 0}
+                            showInlineDate={group.type === 'week'}
+                          />
+                        ))}
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -153,14 +227,29 @@ export default function Handelser() {
                   ⬇️ Tidigare händelser
                 </summary>
                 <div className="mt-6 space-y-8">
-                  {groupedEvents(pastEvents).map((group, idx) => (
-                    <div key={idx}>
-                      <h3 className="text-xl font-semibold text-gray-700 mb-4">
-                        🗓️ {group.year} – {group.name}
+                  {groupedEvents(pastEvents).map((month, monthIdx) => (
+                    <div key={monthIdx} className="mb-8">
+                      <h3 className="text-xl font-bold text-gray-700 mb-4 pb-2 border-b border-gray-300">
+                        📅 {month.year} – {month.name}
                       </h3>
-                      <div className="space-y-4">
-                        {group.data.map((event, i) => (
-                          <EventCard key={i} event={event} />
+                      <div className="space-y-6">
+                        {month.groups.map((group, groupIdx) => (
+                          <div key={groupIdx}>
+                            {group.type === 'week' && (
+                              <h4 className="text-base font-semibold text-gray-600 mb-3">
+                                {group.weekRange.formatted}
+                              </h4>
+                            )}
+                            <div className="space-y-3">
+                              {group.events.map((event, eventIdx) => (
+                                <EventCard
+                                  key={eventIdx}
+                                  event={event}
+                                  showInlineDate={group.type === 'week'}
+                                />
+                              ))}
+                            </div>
+                          </div>
                         ))}
                       </div>
                     </div>

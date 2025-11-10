@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { formatDateRange } from '../utils/dateUtils';
 
-export default function EventCard({ event, defaultOpen = false }) {
+export default function EventCard({ event, defaultOpen = false, showInlineDate = false }) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   const renderEventSection = (title, content) => {
@@ -145,13 +146,24 @@ export default function EventCard({ event, defaultOpen = false }) {
   const hasLankar = event['Länk till hemsida']?.trim() || event['Länk till bilder']?.trim() || event['Länk till boendes hemsida']?.trim();
 
   return (
-    <div className="bg-white rounded-lg shadow-md border-l-4 border-primary hover:shadow-lg transition-shadow">
+    <div className="bg-white rounded-lg shadow-md border-l-4 border-primary hover:shadow-lg transition-all duration-200">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors rounded-t-lg"
+        className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors rounded-t-lg group"
       >
-        <h2 className="text-xl font-bold text-gray-900">{event['Namn på händelse']}</h2>
-        <span className="text-primary text-xl ml-4 transition-transform" style={{ transform: isOpen ? 'rotate(90deg)' : 'rotate(0)' }}>
+        <div className="flex-grow">
+          <div className="flex items-start gap-3">
+            {showInlineDate && (
+              <span className="text-sm font-semibold text-primary bg-primary/10 px-3 py-1 rounded-md whitespace-nowrap mt-0.5">
+                {formatDateRange(event['Datum från'], event['Datum till'])}
+              </span>
+            )}
+            <h2 className="text-xl font-bold text-gray-900 group-hover:text-primary transition-colors">
+              {event['Namn på händelse']}
+            </h2>
+          </div>
+        </div>
+        <span className="text-primary text-xl ml-4 transition-transform duration-200 flex-shrink-0" style={{ transform: isOpen ? 'rotate(90deg)' : 'rotate(0)' }}>
           ▶
         </span>
       </button>

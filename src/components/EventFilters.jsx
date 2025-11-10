@@ -70,8 +70,15 @@ export default function EventFilters({
   }, [selectedTypes]);
 
   return (
-    <div className="mb-8 space-y-4">
-      <div className="flex flex-wrap gap-4">
+    <div className="mb-8 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+      <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+        <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+        </svg>
+        Filtrera händelser
+      </h2>
+      <div className="space-y-4">
+        <div className="flex flex-wrap gap-4">
         <div className="flex flex-col sm:flex-row sm:items-center gap-2">
           <label htmlFor="season-filter" className="font-semibold text-gray-700">
             Säsong:
@@ -84,7 +91,7 @@ export default function EventFilters({
               setSelectedTypes(new Set());
               setSelectedPlace('');
             }}
-            className="px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all min-w-[200px]"
+            className="px-4 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all min-w-[200px]"
           >
             <option value="">Alla säsonger</option>
             {seasons.map(season => (
@@ -100,7 +107,7 @@ export default function EventFilters({
           <div className="relative">
             <button
               onClick={() => setTypeMenuOpen(!typeMenuOpen)}
-              className="px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all min-w-[200px] text-left flex items-center justify-between"
+              className="px-4 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all min-w-[200px] text-left flex items-center justify-between"
             >
               <span className="truncate">{typeButtonText}</span>
               <svg className="w-5 h-5 ml-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -109,7 +116,7 @@ export default function EventFilters({
             </button>
 
             {typeMenuOpen && (
-              <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-80 overflow-y-auto">
+              <div className="absolute top-full left-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-xl z-50 max-h-80 overflow-y-auto animate-in slide-in-from-top-2 duration-200">
                 <div className="p-2 space-y-1">
                   {availableTypes.map(type => (
                     <label
@@ -147,7 +154,7 @@ export default function EventFilters({
             id="place-filter"
             value={selectedPlace}
             onChange={(e) => setSelectedPlace(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all min-w-[200px]"
+            className="px-4 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all min-w-[200px]"
           >
             <option value="">Alla platser</option>
             {availablePlaces.map(place => (
@@ -155,9 +162,8 @@ export default function EventFilters({
             ))}
           </select>
         </div>
-      </div>
-
-      <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+        </div>
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2">
         <label htmlFor="school-filter" className="font-semibold text-gray-700">
           Ledig från skolan:
         </label>
@@ -175,6 +181,7 @@ export default function EventFilters({
           <option value="ja">Ja</option>
           <option value="nej">Nej</option>
         </select>
+        </div>
       </div>
     </div>
   );

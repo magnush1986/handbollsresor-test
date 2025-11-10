@@ -27,3 +27,67 @@ export function parseKostnad(kostnadStr) {
       .replace(',', '.')
   ) || 0;
 }
+
+export function getWeekNumber(date) {
+  const d = new Date(date);
+  d.setHours(0, 0, 0, 0);
+  d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+  const yearStart = new Date(d.getFullYear(), 0, 1);
+  const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+  return weekNo;
+}
+
+export function isSameWeek(date1, date2) {
+  const d1 = new Date(date1);
+  const d2 = new Date(date2);
+  return getWeekNumber(d1) === getWeekNumber(d2) &&
+         d1.getFullYear() === d2.getFullYear();
+}
+
+export function isSameDay(date1, date2) {
+  const d1 = new Date(date1);
+  const d2 = new Date(date2);
+  return d1.getFullYear() === d2.getFullYear() &&
+         d1.getMonth() === d2.getMonth() &&
+         d1.getDate() === d2.getDate();
+}
+
+export function formatDateRange(startDate, endDate) {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  if (isSameDay(startDate, endDate)) {
+    return formatDate(start);
+  }
+
+  if (start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear()) {
+    return `${start.getDate()}–${end.getDate()} ${getMonthName(start.getMonth())} ${start.getFullYear()}`;
+  }
+
+  return `${formatDate(start)} – ${formatDate(end)}`;
+}
+
+export function formatDate(date) {
+  const d = new Date(date);
+  return `${d.getDate()} ${getMonthName(d.getMonth())} ${d.getFullYear()}`;
+}
+
+function getMonthName(month) {
+  const months = ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+  return months[month];
+}
+
+export function getWeekDateRange(date) {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  const monday = new Date(d.setDate(diff));
+  const sunday = new Date(monday);
+  sunday.setDate(monday.getDate() + 6);
+
+  return {
+    start: monday,
+    end: sunday,
+    formatted: `Vecka ${getWeekNumber(date)} (${monday.getDate()}–${sunday.getDate()} ${getMonthName(monday.getMonth())})`
+  };
+}

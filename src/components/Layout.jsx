@@ -8,11 +8,11 @@ export default function Layout({ children }) {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <nav className="bg-white shadow-md sticky top-0 z-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col">
+      <nav className="bg-white shadow-lg sticky top-0 z-50 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            <Link to="/" className="flex-shrink-0">
+            <Link to="/" className="flex-shrink-0 hover:opacity-80 transition-opacity">
               <img
                 src="/Logotyp1.jpg"
                 alt="Föreningens logotyp"
@@ -22,7 +22,7 @@ export default function Layout({ children }) {
 
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-all duration-200"
               aria-label="Meny"
             >
               <svg className="w-6 h-6" viewBox="0 0 100 80" fill="currentColor">
@@ -36,10 +36,10 @@ export default function Layout({ children }) {
               <li>
                 <Link
                   to="/"
-                  className={`text-base lg:text-lg font-medium transition-colors px-3 py-2 rounded-lg ${
+                  className={`text-base lg:text-lg font-medium transition-all duration-200 px-3 py-2 rounded-lg ${
                     isActive('/')
-                      ? 'text-primary bg-primary/10'
-                      : 'text-gray-700 hover:text-primary hover:bg-gray-100'
+                      ? 'text-primary bg-primary/10 shadow-sm'
+                      : 'text-gray-700 hover:text-primary hover:bg-gray-100 hover:shadow-sm'
                   }`}
                 >
                   Händelser
