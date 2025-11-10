@@ -166,9 +166,9 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
       >
         <div className="flex-grow min-w-0">
           <div className="flex items-start gap-2 md:gap-3">
-            {showInlineDate && (
+            {dateStr && (
               <span className="text-xs md:text-sm font-semibold text-primary bg-primary/10 px-2 py-1 md:px-3 rounded-md whitespace-nowrap mt-0.5 flex-shrink-0">
-                {formatDateRange(event['Datum från'], event['Datum till'])}
+                {dateStr}
               </span>
             )}
             <h2 className="text-base md:text-lg font-bold text-gray-900 group-hover:text-primary transition-colors leading-tight">
