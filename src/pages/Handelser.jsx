@@ -165,8 +165,8 @@ export default function Handelser() {
                       {month.groups.map((group, groupIdx) => (
                         <div key={groupIdx}>
                           {group.type === 'week' && (
-                            <h4 className="text-lg font-semibold text-primary mb-3 flex items-center gap-2">
-                              <span className="text-sm bg-primary/10 px-3 py-1 rounded-full">
+                            <h4 className="text-lg md:text-xl font-semibold text-primary mb-3 flex items-center gap-2">
+                              <span className="text-sm md:text-base bg-primary/10 px-3 py-1 rounded-full">
                                 {group.weekRange.formatted}
                               </span>
                             </h4>
@@ -199,8 +199,8 @@ export default function Handelser() {
                   {month.groups.map((group, groupIdx) => (
                     <div key={groupIdx}>
                       {group.type === 'week' && (
-                        <h4 className="text-lg font-semibold text-primary mb-3 flex items-center gap-2">
-                          <span className="text-sm bg-primary/10 px-3 py-1 rounded-full">
+                        <h4 className="text-lg md:text-xl font-semibold text-primary mb-3 flex items-center gap-2">
+                          <span className="text-sm md:text-base bg-primary/10 px-3 py-1 rounded-full">
                             {group.weekRange.formatted}
                           </span>
                         </h4>
@@ -236,8 +236,10 @@ export default function Handelser() {
                         {month.groups.map((group, groupIdx) => (
                           <div key={groupIdx}>
                             {group.type === 'week' && (
-                              <h4 className="text-base font-semibold text-gray-600 mb-3">
-                                {group.weekRange.formatted}
+                              <h4 className="text-base md:text-lg font-semibold text-gray-600 mb-3">
+                                <span className="bg-gray-200/50 px-3 py-1 rounded-full inline-block">
+                                  {group.weekRange.formatted}
+                                </span>
                               </h4>
                             )}
                             <div className="space-y-3">
