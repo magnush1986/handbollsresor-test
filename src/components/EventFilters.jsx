@@ -78,7 +78,7 @@ export default function EventFilters({
         Filtrera händelser
       </h2>
       <div className="space-y-4">
-        <div className="flex flex-wrap gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         <div className="flex flex-col sm:flex-row sm:items-center gap-2">
           <label htmlFor="season-filter" className="font-semibold text-gray-700">
             Säsong:
@@ -162,8 +162,7 @@ export default function EventFilters({
             ))}
           </select>
         </div>
-        </div>
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 xl:col-span-4">
         <label htmlFor="school-filter" className="font-semibold text-gray-700">
           Ledig från skolan:
         </label>
@@ -181,6 +180,7 @@ export default function EventFilters({
           <option value="ja">Ja</option>
           <option value="nej">Nej</option>
         </select>
+          </div>
         </div>
       </div>
     </div>

@@ -7,9 +7,14 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
   const renderEventSection = (title, content) => {
     if (!content) return null;
     return (
-      <div className="bg-primary-light/10 border-l-4 border-primary-light rounded-r-lg p-4 space-y-3">
-        <h3 className="text-lg font-bold text-primary">{title}</h3>
-        {content}
+      <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-3 shadow-sm">
+        <h3 className="text-base font-bold text-primary flex items-center gap-2">
+          <span className="w-1 h-5 bg-primary rounded-full"></span>
+          {title}
+        </h3>
+        <div className="pl-4">
+          {content}
+        </div>
       </div>
     );
   };
@@ -146,7 +151,7 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
   const hasLankar = event['Länk till hemsida']?.trim() || event['Länk till bilder']?.trim() || event['Länk till boendes hemsida']?.trim();
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200">
+    <div className="bg-white rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-all duration-200">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full px-4 py-3 md:px-6 md:py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors rounded-t-lg group"
@@ -158,7 +163,7 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
                 {formatDateRange(event['Datum från'], event['Datum till'])}
               </span>
             )}
-            <h2 className="text-base md:text-lg lg:text-xl font-bold text-gray-900 group-hover:text-primary transition-colors leading-tight">
+            <h2 className="text-lg font-bold text-gray-900 group-hover:text-primary transition-colors leading-tight">
               {event['Namn på händelse']}
             </h2>
           </div>
@@ -169,7 +174,7 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
       </button>
 
       {isOpen && (
-        <div className="px-4 pb-4 md:px-6 md:pb-6 pt-2 space-y-3 md:space-y-4 border-t border-gray-100">
+        <div className="px-4 pb-4 md:px-6 md:pb-6 pt-4 space-y-3 border-t border-gray-100 bg-gray-50/50">
           {renderEventSection('Grundläggande info', grundInfo)}
           {hasLedighet && renderEventSection('Ledig från skolan', ledighetInfo)}
           {hasKostnader && renderEventSection('Kostnader', kostnaderInfo)}

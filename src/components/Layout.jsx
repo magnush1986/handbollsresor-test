@@ -38,7 +38,7 @@ export default function Layout({ children }) {
                   to="/"
                   className={`text-base lg:text-lg font-medium transition-all duration-200 px-3 py-2 rounded-lg ${
                     isActive('/')
-                      ? 'text-primary bg-primary/10 shadow-sm'
+                      ? 'text-white bg-primary shadow-md'
                       : 'text-gray-700 hover:text-primary hover:bg-gray-100 hover:shadow-sm'
                   }`}
                 >
@@ -92,7 +92,7 @@ export default function Layout({ children }) {
                   onClick={() => setMenuOpen(false)}
                   className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${
                     isActive('/')
-                      ? 'text-primary bg-primary/10'
+                      ? 'text-white bg-primary'
                       : 'text-gray-700 hover:bg-gray-100'
                   }`}
                 >
