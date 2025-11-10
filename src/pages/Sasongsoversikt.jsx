@@ -281,33 +281,53 @@ export default function Sasongsoversikt() {
             </div>
             </div>
 
-            {/* Mobile Timeline View */}
-            <div className="lg:hidden space-y-4">
-              {ganttData.tasks.map((task, idx) => (
-                <div key={idx} className="bg-gray-50 rounded-lg p-4 border border-gray-200 hover:border-primary/30 transition-colors">
-                  <div className="flex items-start justify-between gap-3 mb-3">
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-gray-900 text-base leading-tight mb-1">
-                        {task.name}
-                      </h3>
-                      <div className="flex items-center gap-2 text-sm text-gray-600">
-                        <span>📍</span>
-                        <span className="truncate">{task.place}</span>
-                      </div>
+            {/* Mobile Timeline View - Grouped by Month */}
+            <div className="lg:hidden space-y-6">
+              {(() => {
+                const grouped = {};
+                ganttData.tasks.forEach(task => {
+                  const date = new Date(task.start);
+                  const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+                  const monthName = date.toLocaleDateString('sv-SE', { year: 'numeric', month: 'long' });
+                  if (!grouped[key]) {
+                    grouped[key] = { monthName, tasks: [] };
+                  }
+                  grouped[key].tasks.push(task);
+                });
+
+                return Object.entries(grouped).sort(([a], [b]) => a.localeCompare(b)).map(([key, group]) => (
+                  <div key={key} className="bg-white rounded-lg shadow-md border border-gray-200">
+                    <div className="bg-gradient-to-r from-primary to-primary-dark text-white px-4 py-3 rounded-t-lg">
+                      <h3 className="text-base font-bold capitalize">{group.monthName}</h3>
+                      <p className="text-xs opacity-90 mt-0.5">{group.tasks.length} händelse{group.tasks.length !== 1 ? 'r' : ''}</p>
                     </div>
-                    <div className={`${task.color.bg} text-white px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap flex-shrink-0`}>
-                      {task.type}
+                    <div className="divide-y divide-gray-200">
+                      {group.tasks.map((task, idx) => (
+                        <div key={idx} className="p-4 hover:bg-gray-50 transition-colors">
+                          <div className="flex items-start justify-between gap-3 mb-2">
+                            <h4 className="font-semibold text-gray-900 text-sm leading-tight flex-1">
+                              {task.name}
+                            </h4>
+                            <div className={`${task.color.bg} text-white px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap flex-shrink-0`}>
+                              {task.type}
+                            </div>
+                          </div>
+                          <div className="space-y-1.5 text-xs text-gray-600">
+                            <div className="flex items-center gap-2">
+                              <span>📍</span>
+                              <span className="truncate">{task.place}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span>📅</span>
+                              <span>{task.start} – {task.end} ({task.duration} dag{task.duration !== 1 ? 'ar' : ''})</span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-700 bg-white rounded px-3 py-2 border border-gray-200">
-                    <span>📅</span>
-                    <span className="font-medium">{task.start}</span>
-                    <span className="text-gray-400">→</span>
-                    <span className="font-medium">{task.end}</span>
-                    <span className="ml-auto text-xs text-gray-500">({task.duration} dag{task.duration !== 1 ? 'ar' : ''})</span>
-                  </div>
-                </div>
-              ))}
+                ));
+              })()}
             </div>
           </>
         )}

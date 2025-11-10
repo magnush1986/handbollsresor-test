@@ -198,10 +198,10 @@ export default function Budget() {
       </div>
 
       {selectedSeason && (
-        <div className="mt-8 bg-gradient-to-r from-primary to-primary-dark rounded-xl shadow-xl px-8 py-8 border-2 border-primary">
+        <div className="mt-8 bg-gray-900 rounded-xl shadow-2xl px-8 py-10 border-4 border-gray-800">
           <div className="text-center">
-            <div className="text-xl font-semibold mb-3 text-white">Total kostnad för säsongen</div>
-            <div className="text-5xl md:text-6xl font-bold tracking-tight text-white drop-shadow-lg">{total.toLocaleString('sv-SE')} kr</div>
+            <div className="text-lg font-semibold mb-4 text-gray-300 uppercase tracking-wide">Total kostnad för säsongen</div>
+            <div className="text-5xl md:text-7xl font-black tracking-tight text-white">{total.toLocaleString('sv-SE')} <span className="text-primary">kr</span></div>
           </div>
         </div>
       )}

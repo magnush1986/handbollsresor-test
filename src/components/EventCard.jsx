@@ -8,7 +8,7 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
     if (!content) return null;
     return (
       <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-3 shadow-sm">
-        <h3 className="text-base font-bold text-primary flex items-center gap-2">
+        <h3 className="text-sm md:text-base font-bold text-primary flex items-center gap-2">
           <span className="w-1 h-5 bg-primary rounded-full"></span>
           {title}
         </h3>
@@ -22,10 +22,10 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
   const renderLine = (icon, label, value, isLongText = false) => {
     if (!value?.trim()) return null;
     return (
-      <div className={`flex gap-2 ${isLongText ? 'items-start' : 'items-center'}`}>
-        <span className="text-lg flex-shrink-0">{icon}</span>
-        <span className="font-semibold text-gray-700">{label}:</span>
-        <span className="text-gray-900">{value}</span>
+      <div className={`flex gap-2 ${isLongText ? 'items-start' : 'items-center'} text-sm`}>
+        <span className="text-base flex-shrink-0">{icon}</span>
+        <span className="font-semibold text-gray-700 flex-shrink-0">{label}:</span>
+        <span className="text-gray-900 break-words min-w-0">{value}</span>
       </div>
     );
   };
@@ -33,13 +33,13 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
   const renderLink = (url, text, icon = '🔗') => {
     if (!url?.trim() || !url.startsWith('http')) return null;
     return (
-      <div className="flex gap-2 items-center">
-        <span className="text-lg">{icon}</span>
+      <div className="flex gap-2 items-center text-sm">
+        <span className="text-base flex-shrink-0">{icon}</span>
         <a
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-primary hover:text-primary-dark hover:underline transition-colors font-medium"
+          className="text-primary hover:text-primary-dark hover:underline transition-colors font-medium break-all min-w-0"
         >
           {text}
         </a>
@@ -163,14 +163,20 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
                 {formatDateRange(event['Datum från'], event['Datum till'])}
               </span>
             )}
-            <h2 className="text-lg font-bold text-gray-900 group-hover:text-primary transition-colors leading-tight">
+            <h2 className="text-base md:text-lg font-bold text-gray-900 group-hover:text-primary transition-colors leading-tight">
               {event['Namn på händelse']}
             </h2>
           </div>
         </div>
-        <span className="text-primary text-lg md:text-xl ml-3 md:ml-4 transition-transform duration-200 flex-shrink-0" style={{ transform: isOpen ? 'rotate(90deg)' : 'rotate(0)' }}>
-          ▶
-        </span>
+        <svg
+          className="w-5 h-5 md:w-6 md:h-6 text-primary ml-3 md:ml-4 transition-transform duration-200 flex-shrink-0"
+          style={{ transform: isOpen ? 'rotate(90deg)' : 'rotate(0)' }}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
       </button>
 
       {isOpen && (
