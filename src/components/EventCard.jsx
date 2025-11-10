@@ -41,7 +41,7 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-primary hover:text-primary-dark hover:underline transition-colors font-medium break-all min-w-0"
+          className="text-blue-600 hover:text-blue-800 underline transition-colors break-all min-w-0"
         >
           {text}
         </a>
@@ -127,7 +127,7 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
               href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event['Adress till boende'])}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary hover:text-primary-dark hover:underline transition-colors text-xs inline-block"
+              className="text-blue-600 hover:text-blue-800 underline transition-colors text-xs inline-block"
             >
               Visa på Google Maps
             </a>
@@ -136,7 +136,7 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
               href={`https://maps.apple.com/?q=${encodeURIComponent(event['Adress till boende'])}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary hover:text-primary-dark hover:underline transition-colors text-xs inline-block"
+              className="text-blue-600 hover:text-blue-800 underline transition-colors text-xs inline-block"
             >
               Visa på Apple Kartor
             </a>
