@@ -149,7 +149,7 @@ export default function Sasongsoversikt() {
   }
 
   return (
-    <div className="w-full max-w-[1600px] mx-auto px-4 py-8">
+    <div className="w-full max-w-[2000px] mx-auto px-4 py-8">
       <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Säsongsöversikt</h1>
 
       <div className="mb-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
@@ -235,7 +235,7 @@ export default function Sasongsoversikt() {
           <>
             {/* Desktop Gantt View */}
             <div className="hidden lg:block overflow-x-auto">
-              <div className="min-w-[1200px]">
+              <div className="min-w-[800px]">
               <div className="bg-gray-100 border-b border-gray-300 px-4 py-2 flex text-xs font-semibold text-gray-700">
                 <div className="w-48 flex-shrink-0">Händelse</div>
                 <div className="flex-1 flex">
