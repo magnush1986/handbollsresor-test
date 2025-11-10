@@ -37,11 +37,14 @@ export default function Sasongsoversikt() {
 
   const tasks = useMemo(() => {
     return allEvents
-      .filter(e =>
-        e['Säsong'] === selectedSeason &&
-        (selectedTypes.size === 0 || selectedTypes.has(e['Typ av händelse'])) &&
-        (selectedPlaces.size === 0 || selectedPlaces.has(e['Plats']))
-      )
+      .filter(e => {
+        const startDate = new Date(e['Datum från']);
+        const monthKey = `${startDate.getFullYear()}-${String(startDate.getMonth() + 1).padStart(2, '0')}`;
+        return e['Säsong'] === selectedSeason &&
+          (selectedTypes.size === 0 || selectedTypes.has(e['Typ av händelse'])) &&
+          (selectedPlaces.size === 0 || selectedPlaces.has(e['Plats'])) &&
+          (selectedMonths.size === 0 || selectedMonths.has(monthKey));
+      })
       .map(e => ({
         id: e['Namn på händelse'],
         name: e['Namn på händelse'],
@@ -51,7 +54,7 @@ export default function Sasongsoversikt() {
         place: e['Plats']
       }))
       .sort((a, b) => new Date(a.start) - new Date(b.start));
-  }, [allEvents, selectedSeason, selectedTypes, selectedPlaces]);
+  }, [allEvents, selectedSeason, selectedTypes, selectedPlaces, selectedMonths]);
 
   const handleTypeToggle = (type) => {
     const newTypes = new Set(selectedTypes);
