@@ -224,7 +224,7 @@ export default function Handelser() {
             {pastEvents.length > 0 && (
               <details className="mt-8 bg-gray-50 rounded-lg border border-gray-200 p-6">
                 <summary className="text-xl font-bold cursor-pointer text-gray-700 hover:text-primary transition-colors">
-                  ⬇️ Tidigare händelser
+                  📅 Tidigare händelser
                 </summary>
                 <div className="mt-6 space-y-8">
                   {groupedEvents(pastEvents).map((month, monthIdx) => (

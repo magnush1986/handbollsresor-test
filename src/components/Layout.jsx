@@ -36,10 +36,10 @@ export default function Layout({ children }) {
               <li>
                 <Link
                   to="/"
-                  className={`text-base lg:text-lg font-medium transition-colors px-3 py-2 rounded-lg ${
+                  className={`text-base lg:text-lg font-medium transition-colors px-3 py-2 rounded-lg border-b-2 ${
                     isActive('/')
-                      ? 'text-primary bg-primary/10'
-                      : 'text-gray-700 hover:text-primary hover:bg-gray-100'
+                      ? 'text-primary border-primary'
+                      : 'text-gray-700 border-transparent hover:text-primary hover:bg-gray-100'
                   }`}
                 >
                   Händelser
@@ -48,10 +48,10 @@ export default function Layout({ children }) {
               <li>
                 <Link
                   to="/packlista"
-                  className={`text-base lg:text-lg font-medium transition-colors px-3 py-2 rounded-lg ${
+                  className={`text-base lg:text-lg font-medium transition-colors px-3 py-2 rounded-lg border-b-2 ${
                     isActive('/packlista')
-                      ? 'text-primary bg-primary/10'
-                      : 'text-gray-700 hover:text-primary hover:bg-gray-100'
+                      ? 'text-primary border-primary'
+                      : 'text-gray-700 border-transparent hover:text-primary hover:bg-gray-100'
                   }`}
                 >
                   Packlista
@@ -60,10 +60,10 @@ export default function Layout({ children }) {
               <li>
                 <Link
                   to="/budget"
-                  className={`text-base lg:text-lg font-medium transition-colors px-3 py-2 rounded-lg ${
+                  className={`text-base lg:text-lg font-medium transition-colors px-3 py-2 rounded-lg border-b-2 ${
                     isActive('/budget')
-                      ? 'text-primary bg-primary/10'
-                      : 'text-gray-700 hover:text-primary hover:bg-gray-100'
+                      ? 'text-primary border-primary'
+                      : 'text-gray-700 border-transparent hover:text-primary hover:bg-gray-100'
                   }`}
                 >
                   Budget
@@ -72,10 +72,10 @@ export default function Layout({ children }) {
               <li>
                 <Link
                   to="/sasongsoversikt"
-                  className={`text-base lg:text-lg font-medium transition-colors px-3 py-2 rounded-lg ${
+                  className={`text-base lg:text-lg font-medium transition-colors px-3 py-2 rounded-lg border-b-2 ${
                     isActive('/sasongsoversikt')
-                      ? 'text-primary bg-primary/10'
-                      : 'text-gray-700 hover:text-primary hover:bg-gray-100'
+                      ? 'text-primary border-primary'
+                      : 'text-gray-700 border-transparent hover:text-primary hover:bg-gray-100'
                   }`}
                 >
                   Säsongsöversikt
@@ -90,10 +90,10 @@ export default function Layout({ children }) {
                 <Link
                   to="/"
                   onClick={() => setMenuOpen(false)}
-                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${
+                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors border-l-4 ${
                     isActive('/')
-                      ? 'text-primary bg-primary/10'
-                      : 'text-gray-700 hover:bg-gray-100'
+                      ? 'text-primary border-primary bg-primary/5'
+                      : 'text-gray-700 border-transparent hover:bg-gray-100'
                   }`}
                 >
                   Händelser
@@ -103,10 +103,10 @@ export default function Layout({ children }) {
                 <Link
                   to="/packlista"
                   onClick={() => setMenuOpen(false)}
-                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${
+                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors border-l-4 ${
                     isActive('/packlista')
-                      ? 'text-primary bg-primary/10'
-                      : 'text-gray-700 hover:bg-gray-100'
+                      ? 'text-primary border-primary bg-primary/5'
+                      : 'text-gray-700 border-transparent hover:bg-gray-100'
                   }`}
                 >
                   Packlista
@@ -116,10 +116,10 @@ export default function Layout({ children }) {
                 <Link
                   to="/budget"
                   onClick={() => setMenuOpen(false)}
-                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${
+                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors border-l-4 ${
                     isActive('/budget')
-                      ? 'text-primary bg-primary/10'
-                      : 'text-gray-700 hover:bg-gray-100'
+                      ? 'text-primary border-primary bg-primary/5'
+                      : 'text-gray-700 border-transparent hover:bg-gray-100'
                   }`}
                 >
                   Budget
@@ -129,10 +129,10 @@ export default function Layout({ children }) {
                 <Link
                   to="/sasongsoversikt"
                   onClick={() => setMenuOpen(false)}
-                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${
+                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors border-l-4 ${
                     isActive('/sasongsoversikt')
-                      ? 'text-primary bg-primary/10'
-                      : 'text-gray-700 hover:bg-gray-100'
+                      ? 'text-primary border-primary bg-primary/5'
+                      : 'text-gray-700 border-transparent hover:bg-gray-100'
                   }`}
                 >
                   Säsongsöversikt
