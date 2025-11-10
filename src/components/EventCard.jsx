@@ -49,11 +49,15 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
     );
   };
 
+  const dateStr = event['Datum från'] && event['Datum till']
+    ? formatDateRange(event['Datum från'], event['Datum till'])
+    : event['Datum från'] || event['Datum till'] || '';
+
   const grundInfo = (
     <>
       {renderLine('🏷️', 'Typ', event['Typ av händelse'])}
       {renderLine('📍', 'Plats', event['Plats'])}
-      {renderLine('🗓️', 'Period', `${event['Datum från']} – ${event['Datum till']}`)}
+      {dateStr && renderLine('🗓️', 'Period', dateStr)}
       {event['Övrig information']?.trim() && (
         <div className="flex gap-2 items-start text-sm">
           <span className="text-base flex-shrink-0">🗒️</span>
