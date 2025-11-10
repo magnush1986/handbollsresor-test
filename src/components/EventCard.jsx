@@ -22,8 +22,8 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
   const renderLine = (icon, label, value, isLongText = false) => {
     if (!value?.trim()) return null;
     return (
-      <div className={`flex gap-2 ${isLongText ? 'items-start' : 'items-center'} text-sm`}>
-        <span className="text-base flex-shrink-0">{icon}</span>
+      <div className={`flex gap-2 ${isLongText ? 'items-start' : 'items-center'} text-sm md:text-base`}>
+        <span className="text-base md:text-lg flex-shrink-0">{icon}</span>
         <div className="flex flex-wrap gap-x-1 min-w-0">
           <span className="font-semibold text-gray-700 whitespace-nowrap">{label}:</span>
           <span className="text-gray-900 break-words">{value}</span>
@@ -35,8 +35,8 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
   const renderLink = (url, text, icon = '🔗') => {
     if (!url?.trim() || !url.startsWith('http')) return null;
     return (
-      <div className="flex gap-2 items-center text-sm">
-        <span className="text-base flex-shrink-0">{icon}</span>
+      <div className="flex gap-2 items-center text-sm md:text-base">
+        <span className="text-base md:text-lg flex-shrink-0">{icon}</span>
         <a
           href={url}
           target="_blank"
@@ -59,8 +59,8 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
       {renderLine('📍', 'Plats', event['Plats'])}
       {dateStr && renderLine('🗓️', 'Period', dateStr)}
       {event['Övrig information']?.trim() && (
-        <div className="flex gap-2 items-start text-sm">
-          <span className="text-base flex-shrink-0">🗒️</span>
+        <div className="flex gap-2 items-start text-sm md:text-base">
+          <span className="text-base md:text-lg flex-shrink-0">🗒️</span>
           <span className="text-gray-900 break-words min-w-0">{event['Övrig information']}</span>
         </div>
       )}
@@ -72,8 +72,8 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
       {event['Ledig från skolan?']?.trim().toLowerCase() === 'ja' && renderLine('✅', 'Ledig från skolan', 'Ja')}
       {event['Ledig från skolan?']?.trim().toLowerCase() === 'nej' && renderLine('❌', 'Ledig från skolan', 'Nej')}
       {event['Ledighet']?.trim() && (
-        <div className="flex gap-2 items-start text-sm">
-          <span className="text-base flex-shrink-0">📝</span>
+        <div className="flex gap-2 items-start text-sm md:text-base">
+          <span className="text-base md:text-lg flex-shrink-0">📝</span>
           <span className="text-gray-900 break-words min-w-0">{event['Ledighet']}</span>
         </div>
       )}
@@ -97,8 +97,8 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
       {event['Samling Härnösand']?.trim() && renderLine('🚍', 'Samling Härnösand', event['Samling Härnösand'])}
       {event['Samling på plats']?.trim() && renderLine('⏱️', 'Samling på plats', event['Samling på plats'])}
       {event['Resväg']?.trim() && (
-        <div className="flex gap-2 items-start text-sm">
-          <span className="text-base flex-shrink-0">🗺️</span>
+        <div className="flex gap-2 items-start text-sm md:text-base">
+          <span className="text-base md:text-lg flex-shrink-0">🗺️</span>
           <span className="text-gray-900 break-words min-w-0">{event['Resväg']}</span>
         </div>
       )}
@@ -114,9 +114,9 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
       {renderLine('🪧', 'Namn på boende', event['Namn på boende'])}
       {renderLine('🔑', 'Tillgång till boende', event['Tillgång till boende'])}
       {event['Adress till boende']?.trim() && (
-        <div className="space-y-2 text-sm">
+        <div className="space-y-2 text-sm md:text-base">
           <div className="flex gap-2 items-start">
-            <span className="text-base flex-shrink-0">📬</span>
+            <span className="text-base md:text-lg flex-shrink-0">📬</span>
             <div className="flex flex-wrap gap-x-1 min-w-0">
               <span className="font-semibold text-gray-700 whitespace-nowrap">Adress till boende:</span>
               <span className="text-gray-900 break-words">{event['Adress till boende']}</span>
@@ -127,7 +127,7 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
               href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event['Adress till boende'])}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 underline transition-colors text-xs inline-block"
+              className="text-blue-600 hover:text-blue-800 underline transition-colors text-xs md:text-sm inline-block"
             >
               Visa på Google Maps
             </a>
@@ -136,7 +136,7 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
               href={`https://maps.apple.com/?q=${encodeURIComponent(event['Adress till boende'])}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 underline transition-colors text-xs inline-block"
+              className="text-blue-600 hover:text-blue-800 underline transition-colors text-xs md:text-sm inline-block"
             >
               Visa på Apple Kartor
             </a>
