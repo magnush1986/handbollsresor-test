@@ -1,7 +1,6 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useGoogleSheet } from '../hooks/useGoogleSheet';
 import { getCurrentSeason } from '../utils/dateUtils';
-import Gantt from 'frappe-gantt';
 
 const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRjWqqqO7FHa-re2G6iIemdPD12hUJK15z2InQoSUIhZ08Szlg_tO8muapx6cAGVYF6egrltGC60tuE/pub?output=csv';
 
@@ -10,9 +9,7 @@ export default function Sasongsoversikt() {
   const [selectedSeason, setSelectedSeason] = useState('');
   const [selectedTypes, setSelectedTypes] = useState(new Set());
   const [selectedPlaces, setSelectedPlaces] = useState(new Set());
-  const [viewMode, setViewMode] = useState('Month');
-  const ganttRef = useRef(null);
-  const ganttInstance = useRef(null);
+  const [viewMode, setViewMode] = useState('month');
 
   useEffect(() => {
     if (allEvents.length > 0 && !selectedSeason) {
@@ -76,43 +73,50 @@ export default function Sasongsoversikt() {
     setSelectedPlaces(newPlaces);
   };
 
-  useEffect(() => {
-    if (ganttRef.current && tasks.length > 0) {
-      if (ganttInstance.current) {
-        ganttInstance.current.clear();
-      }
+  const ganttData = useMemo(() => {
+    if (tasks.length === 0) return { months: [], tasks: [] };
 
-      const ganttTasks = tasks.map((task, idx) => ({
-        id: `task-${idx}`,
-        name: task.name,
-        start: task.start,
-        end: task.end,
-        progress: 100,
-        custom_class: 'gantt-task'
-      }));
+    const startDates = tasks.map(t => new Date(t.start));
+    const endDates = tasks.map(t => new Date(t.end));
+    const minDate = new Date(Math.min(...startDates));
+    const maxDate = new Date(Math.max(...endDates));
 
-      ganttInstance.current = new Gantt(ganttRef.current, ganttTasks, {
-        view_mode: viewMode,
-        language: 'sv',
-        bar_height: 30,
-        bar_corner_radius: 3,
-        arrow_curve: 5,
-        padding: 18,
-        date_format: 'YYYY-MM-DD',
-        custom_popup_html: function(task) {
-          const taskData = tasks.find(t => t.name === task.name);
-          return `
-            <div class="gantt-popup">
-              <h3>${task.name}</h3>
-              <p><strong>Typ:</strong> ${taskData?.type || ''}</p>
-              <p><strong>Plats:</strong> ${taskData?.place || ''}</p>
-              <p><strong>Period:</strong> ${task._start.toLocaleDateString('sv-SE')} - ${task._end.toLocaleDateString('sv-SE')}</p>
-            </div>
-          `;
-        }
+    const months = [];
+    let current = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
+    const end = new Date(maxDate.getFullYear(), maxDate.getMonth() + 1, 0);
+
+    while (current <= end) {
+      months.push({
+        year: current.getFullYear(),
+        month: current.getMonth(),
+        monthName: current.toLocaleDateString('sv-SE', { month: 'short' }),
+        days: new Date(current.getFullYear(), current.getMonth() + 1, 0).getDate()
       });
+      current = new Date(current.getFullYear(), current.getMonth() + 1, 1);
     }
-  }, [tasks, viewMode]);
+
+    const totalDays = Math.ceil((maxDate - minDate) / (1000 * 60 * 60 * 24)) + 1;
+
+    return {
+      months,
+      tasks: tasks.map(task => {
+        const start = new Date(task.start);
+        const end = new Date(task.end);
+        const startOffset = Math.ceil((start - minDate) / (1000 * 60 * 60 * 24));
+        const duration = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
+        return {
+          ...task,
+          startOffset,
+          duration,
+          widthPercent: (duration / totalDays) * 100,
+          leftPercent: (startOffset / totalDays) * 100
+        };
+      }),
+      totalDays,
+      minDate,
+      maxDate
+    };
+  }, [tasks]);
 
   if (loading) {
     return (
@@ -201,44 +205,58 @@ export default function Sasongsoversikt() {
       <div className="bg-white rounded-xl shadow-md border border-gray-200 p-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
           <h2 className="text-xl font-bold text-gray-900">Gantt-schema</h2>
-          <div className="flex gap-2">
-            <button
-              onClick={() => setViewMode('Day')}
-              className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
-                viewMode === 'Day'
-                  ? 'bg-primary text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-            >
-              Dag
-            </button>
-            <button
-              onClick={() => setViewMode('Week')}
-              className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
-                viewMode === 'Week'
-                  ? 'bg-primary text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-            >
-              Vecka
-            </button>
-            <button
-              onClick={() => setViewMode('Month')}
-              className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
-                viewMode === 'Month'
-                  ? 'bg-primary text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-            >
-              Månad
-            </button>
+          <div className="text-sm text-gray-600">
+            {ganttData.tasks.length} händelse{ganttData.tasks.length !== 1 ? 'r' : ''}
           </div>
         </div>
         {tasks.length === 0 ? (
           <p className="text-gray-600 text-center py-8">Inga händelser matchar filtreringen</p>
         ) : (
           <div className="overflow-x-auto">
-            <svg ref={ganttRef} className="w-full" style={{ minHeight: '400px' }}></svg>
+            <div className="min-w-[800px]">
+              <div className="bg-gray-100 border-b border-gray-300 px-4 py-2 flex text-xs font-semibold text-gray-700">
+                <div className="w-48 flex-shrink-0">Händelse</div>
+                <div className="flex-1 flex">
+                  {ganttData.months.map((month, idx) => (
+                    <div
+                      key={idx}
+                      className="text-center border-l border-gray-300 px-2"
+                      style={{ width: `${(month.days / ganttData.totalDays) * 100}%` }}
+                    >
+                      {month.monthName} {month.year}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="divide-y divide-gray-200">
+                {ganttData.tasks.map((task, idx) => (
+                  <div key={idx} className="flex items-center px-4 py-3 hover:bg-gray-50 group">
+                    <div className="w-48 flex-shrink-0 pr-4">
+                      <div className="font-semibold text-sm text-gray-900 truncate" title={task.name}>
+                        {task.name}
+                      </div>
+                      <div className="text-xs text-gray-600 mt-1">
+                        {task.start} – {task.end}
+                      </div>
+                    </div>
+                    <div className="flex-1 relative h-8">
+                      <div
+                        className="absolute h-6 bg-primary rounded flex items-center px-2 text-white text-xs font-medium shadow-sm group-hover:shadow-md transition-shadow"
+                        style={{
+                          left: `${task.leftPercent}%`,
+                          width: `${task.widthPercent}%`,
+                          minWidth: '60px'
+                        }}
+                        title={`${task.name}: ${task.start} - ${task.end}`}
+                      >
+                        <span className="truncate">{task.type}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         )}
       </div>
