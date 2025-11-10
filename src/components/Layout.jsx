@@ -20,7 +20,7 @@ export default function Layout({ children }) {
                   className="h-14 w-auto object-contain"
                 />
               </Link>
-              <span className="hidden sm:block text-xl md:text-2xl font-bold text-gray-800">
+              <span className="text-xl md:text-2xl font-bold text-gray-800">
                 F11
               </span>
             </div>
