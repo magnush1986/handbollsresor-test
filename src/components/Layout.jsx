@@ -36,10 +36,10 @@ export default function Layout({ children }) {
               <li>
                 <Link
                   to="/"
-                  className={`text-base lg:text-lg font-medium transition-all duration-200 px-3 py-2 rounded-lg border-2 ${
+                  className={`text-base lg:text-lg font-medium transition-colors px-3 py-2 rounded-lg ${
                     isActive('/')
-                      ? 'text-white bg-primary border-primary shadow-md'
-                      : 'text-gray-700 border-transparent hover:text-primary hover:bg-gray-100 hover:border-gray-200'
+                      ? 'text-primary bg-primary/10'
+                      : 'text-gray-700 hover:text-primary hover:bg-gray-100'
                   }`}
                 >
                   Händelser
@@ -90,10 +90,10 @@ export default function Layout({ children }) {
                 <Link
                   to="/"
                   onClick={() => setMenuOpen(false)}
-                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors border-2 ${
+                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${
                     isActive('/')
-                      ? 'text-white bg-primary border-primary shadow-sm'
-                      : 'text-gray-700 border-transparent hover:bg-gray-100'
+                      ? 'text-primary bg-primary/10'
+                      : 'text-gray-700 hover:bg-gray-100'
                   }`}
                 >
                   Händelser

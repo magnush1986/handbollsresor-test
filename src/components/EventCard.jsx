@@ -24,8 +24,10 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
     return (
       <div className={`flex gap-2 ${isLongText ? 'items-start' : 'items-center'} text-sm`}>
         <span className="text-base flex-shrink-0">{icon}</span>
-        <span className="font-semibold text-gray-700 flex-shrink-0">{label}:</span>
-        <span className="text-gray-900 break-words min-w-0">{value}</span>
+        <div className="flex flex-wrap gap-x-1 min-w-0">
+          <span className="font-semibold text-gray-700 whitespace-nowrap">{label}:</span>
+          <span className="text-gray-900 break-words">{value}</span>
+        </div>
       </div>
     );
   };
@@ -111,8 +113,10 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
         <div className="space-y-2 text-sm">
           <div className="flex gap-2 items-start">
             <span className="text-base flex-shrink-0">📬</span>
-            <span className="font-semibold text-gray-700 flex-shrink-0">Adress till boende:</span>
-            <span className="text-gray-900 break-words min-w-0">{event['Adress till boende']}</span>
+            <div className="flex flex-wrap gap-x-1 min-w-0">
+              <span className="font-semibold text-gray-700 whitespace-nowrap">Adress till boende:</span>
+              <span className="text-gray-900 break-words">{event['Adress till boende']}</span>
+            </div>
           </div>
           <div className="ml-7 space-y-1">
             <a
