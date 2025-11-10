@@ -12,13 +12,18 @@ export default function Layout({ children }) {
       <nav className="bg-white shadow-lg sticky top-0 z-50 border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            <Link to="/" className="flex-shrink-0 hover:opacity-80 transition-opacity">
-              <img
-                src="/Logotyp1.jpg"
-                alt="Föreningens logotyp"
-                className="h-14 w-auto object-contain"
-              />
-            </Link>
+            <div className="flex items-center gap-4">
+              <Link to="/" className="flex-shrink-0 hover:opacity-80 transition-opacity">
+                <img
+                  src="/Logotyp1.jpg"
+                  alt="Föreningens logotyp"
+                  className="h-14 w-auto object-contain"
+                />
+              </Link>
+              <span className="hidden sm:block text-xl md:text-2xl font-bold text-gray-800">
+                F11
+              </span>
+            </div>
 
             <button
               onClick={() => setMenuOpen(!menuOpen)}
