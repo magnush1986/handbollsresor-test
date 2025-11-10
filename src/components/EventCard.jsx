@@ -146,30 +146,30 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
   const hasLankar = event['Länk till hemsida']?.trim() || event['Länk till bilder']?.trim() || event['Länk till boendes hemsida']?.trim();
 
   return (
-    <div className="bg-white rounded-lg shadow-md border-l-4 border-primary hover:shadow-lg transition-all duration-200">
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors rounded-t-lg group"
+        className="w-full px-4 py-3 md:px-6 md:py-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors rounded-t-lg group"
       >
-        <div className="flex-grow">
-          <div className="flex items-start gap-3">
+        <div className="flex-grow min-w-0">
+          <div className="flex items-start gap-2 md:gap-3">
             {showInlineDate && (
-              <span className="text-sm font-semibold text-primary bg-primary/10 px-3 py-1 rounded-md whitespace-nowrap mt-0.5">
+              <span className="text-xs md:text-sm font-semibold text-primary bg-primary/10 px-2 py-1 md:px-3 rounded-md whitespace-nowrap mt-0.5 flex-shrink-0">
                 {formatDateRange(event['Datum från'], event['Datum till'])}
               </span>
             )}
-            <h2 className="text-xl font-bold text-gray-900 group-hover:text-primary transition-colors">
+            <h2 className="text-base md:text-lg lg:text-xl font-bold text-gray-900 group-hover:text-primary transition-colors leading-tight">
               {event['Namn på händelse']}
             </h2>
           </div>
         </div>
-        <span className="text-primary text-xl ml-4 transition-transform duration-200 flex-shrink-0" style={{ transform: isOpen ? 'rotate(90deg)' : 'rotate(0)' }}>
+        <span className="text-primary text-lg md:text-xl ml-3 md:ml-4 transition-transform duration-200 flex-shrink-0" style={{ transform: isOpen ? 'rotate(90deg)' : 'rotate(0)' }}>
           ▶
         </span>
       </button>
 
       {isOpen && (
-        <div className="px-6 pb-6 space-y-4">
+        <div className="px-4 pb-4 md:px-6 md:pb-6 pt-2 space-y-3 md:space-y-4 border-t border-gray-100">
           {renderEventSection('Grundläggande info', grundInfo)}
           {hasLedighet && renderEventSection('Ledig från skolan', ledighetInfo)}
           {hasKostnader && renderEventSection('Kostnader', kostnaderInfo)}

@@ -87,8 +87,14 @@ export default function Sasongsoversikt() {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Säsongsöversikt</h1>
 
-      <div className="mb-6 space-y-4">
-        <div className="flex flex-wrap gap-4">
+      <div className="mb-6 bg-white rounded-xl shadow-md p-6 border border-gray-200">
+        <h2 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+          <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+          </svg>
+          Filtrera översikt
+        </h2>
+        <div className="space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center gap-2">
             <label htmlFor="season-select" className="font-semibold text-gray-700">
               Säsong:
@@ -97,17 +103,15 @@ export default function Sasongsoversikt() {
               id="season-select"
               value={selectedSeason}
               onChange={(e) => setSelectedSeason(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all min-w-[200px]"
+              className="px-4 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-700 shadow-sm hover:bg-gray-50 hover:border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all min-w-[200px]"
             >
               {seasons.map(season => (
                 <option key={season} value={season}>{season}</option>
               ))}
             </select>
           </div>
-        </div>
 
-        <div className="flex flex-col gap-4">
-          <details className="bg-white rounded-lg border border-gray-200 p-4">
+          <details className="bg-gray-50 rounded-lg border border-gray-200 p-4">
             <summary className="font-semibold text-gray-700 cursor-pointer">
               Filtrera efter typ ({selectedTypes.size > 0 ? `${selectedTypes.size} valda` : 'alla'})
             </summary>
@@ -129,7 +133,7 @@ export default function Sasongsoversikt() {
             </div>
           </details>
 
-          <details className="bg-white rounded-lg border border-gray-200 p-4">
+          <details className="bg-gray-50 rounded-lg border border-gray-200 p-4">
             <summary className="font-semibold text-gray-700 cursor-pointer">
               Filtrera efter plats ({selectedPlaces.size > 0 ? `${selectedPlaces.size} valda` : 'alla'})
             </summary>
@@ -153,29 +157,30 @@ export default function Sasongsoversikt() {
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
+      <div className="bg-white rounded-xl shadow-md border border-gray-200 p-6">
         <h2 className="text-xl font-bold text-gray-900 mb-4">Händelser i tidsordning</h2>
         {tasks.length === 0 ? (
           <p className="text-gray-600 text-center py-8">Inga händelser matchar filtreringen</p>
         ) : (
           <div className="space-y-3">
             {tasks.map((task, idx) => (
-              <div key={idx} className="flex gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                <div className="flex-shrink-0 w-32 text-sm text-gray-600">
-                  <div>{task.start}</div>
-                  {task.end !== task.start && <div>— {task.end}</div>}
+              <div key={idx} className="flex flex-col md:flex-row gap-3 md:gap-4 p-4 bg-gray-50 rounded-lg hover:bg-primary/5 hover:border-primary/20 border border-transparent transition-all">
+                <div className="flex-shrink-0 md:w-32">
+                  <div className="inline-block bg-primary/10 text-primary text-xs md:text-sm font-semibold px-3 py-1 rounded-md">
+                    <div>{task.start}</div>
+                    {task.end !== task.start && <div className="text-xs opacity-75">↓ {task.end}</div>}
+                  </div>
                 </div>
-                <div className="flex-grow">
-                  <div className="font-semibold text-gray-900">{task.name}</div>
-                  <div className="text-sm text-gray-600 mt-1">
+                <div className="flex-grow min-w-0">
+                  <div className="font-semibold text-gray-900 text-sm md:text-base">{task.name}</div>
+                  <div className="text-xs md:text-sm text-gray-600 mt-1 flex flex-wrap gap-x-3 gap-y-1">
                     <span className="inline-flex items-center gap-1">
                       <span>🏷️</span>
-                      {task.type}
+                      <span>{task.type}</span>
                     </span>
-                    <span className="mx-2">•</span>
                     <span className="inline-flex items-center gap-1">
                       <span>📍</span>
-                      {task.place}
+                      <span>{task.place}</span>
                     </span>
                   </div>
                 </div>

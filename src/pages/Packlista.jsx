@@ -36,35 +36,35 @@ export default function Packlista() {
       </p>
 
       <div className="space-y-6">
-        <div className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
-          <div className="bg-primary text-white px-6 py-4">
-            <h2 className="text-2xl font-bold flex items-center gap-3">
+        <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+          <div className="bg-gradient-to-r from-primary to-primary-dark text-white px-6 py-4">
+            <h2 className="text-xl md:text-2xl font-bold flex items-center gap-3">
               <span>👜</span>
               <span>Lilla väskan</span>
             </h2>
           </div>
-          <ul className="divide-y divide-gray-200">
+          <ul className="divide-y divide-gray-100">
             {lillaVaskan.map((item, idx) => (
-              <li key={idx} className="px-6 py-4 hover:bg-gray-50 transition-colors flex items-start gap-3">
-                <span className="text-primary mt-1">✓</span>
-                <span className="text-gray-700">{item}</span>
+              <li key={idx} className="px-4 md:px-6 py-3 md:py-4 hover:bg-primary/5 transition-colors flex items-start gap-3">
+                <span className="text-primary mt-1 text-lg flex-shrink-0">✓</span>
+                <span className="text-gray-700 text-sm md:text-base">{item}</span>
               </li>
             ))}
           </ul>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
-          <div className="bg-primary text-white px-6 py-4">
-            <h2 className="text-2xl font-bold flex items-center gap-3">
+        <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+          <div className="bg-gradient-to-r from-primary to-primary-dark text-white px-6 py-4">
+            <h2 className="text-xl md:text-2xl font-bold flex items-center gap-3">
               <span>🧳</span>
               <span>Stora väskan</span>
             </h2>
           </div>
-          <ul className="divide-y divide-gray-200">
+          <ul className="divide-y divide-gray-100">
             {storaVaskan.map((item, idx) => (
-              <li key={idx} className="px-6 py-4 hover:bg-gray-50 transition-colors flex items-start gap-3">
-                <span className="text-primary mt-1">✓</span>
-                <span className="text-gray-700">{item}</span>
+              <li key={idx} className="px-4 md:px-6 py-3 md:py-4 hover:bg-primary/5 transition-colors flex items-start gap-3">
+                <span className="text-primary mt-1 text-lg flex-shrink-0">✓</span>
+                <span className="text-gray-700 text-sm md:text-base">{item}</span>
               </li>
             ))}
           </ul>
