@@ -37,8 +37,8 @@ export default function Packlista() {
 
       <div className="space-y-6">
         <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
-          <div className="bg-gradient-to-r from-primary to-primary-dark text-white px-6 py-4">
-            <h2 className="text-xl md:text-2xl font-bold flex items-center gap-3">
+          <div className="bg-green-600 px-6 py-4">
+            <h2 className="text-xl md:text-2xl font-bold flex items-center gap-3 text-white">
               <span>👜</span>
               <span>Lilla väskan</span>
             </h2>
@@ -54,8 +54,8 @@ export default function Packlista() {
         </div>
 
         <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
-          <div className="bg-gradient-to-r from-primary to-primary-dark text-white px-6 py-4">
-            <h2 className="text-xl md:text-2xl font-bold flex items-center gap-3">
+          <div className="bg-blue-600 px-6 py-4">
+            <h2 className="text-xl md:text-2xl font-bold flex items-center gap-3 text-white">
               <span>🧳</span>
               <span>Stora väskan</span>
             </h2>
