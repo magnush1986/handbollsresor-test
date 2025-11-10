@@ -8,7 +8,7 @@ export default function EventCard({ event, defaultOpen = false, showInlineDate =
     if (!content) return null;
     return (
       <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 space-y-3 shadow-sm">
-        <h3 className="text-sm md:text-base font-bold text-primary flex items-center gap-2">
+        <h3 className="text-sm md:text-lg font-bold text-primary flex items-center gap-2">
           <span className="w-1 h-5 bg-primary rounded-full"></span>
           {title}
         </h3>
